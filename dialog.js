@@ -14,6 +14,7 @@ const url = new URL(window.location.href);
 const username = url.searchParams.get("username");
 
 $("#username-box").text(username);
+$("#username-box-2").text(username);
 
 $.getJSON("https://ske.drakeluce.com:40103/get/" + username, function (data) {
 	if(typeof data.error !== "undefined"){

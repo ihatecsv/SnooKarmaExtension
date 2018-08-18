@@ -1,5 +1,3 @@
-const domComments = document.getElementsByClassName("Comment");
-
 window.addEventListener('message', function (ev) {
 	if(typeof ev.data.request === "undefined"){
 		return;
@@ -27,17 +25,36 @@ window.addEventListener('message', function (ev) {
 		});
 	});
 }, true); // useCapture: true
-
-for(let i = 0; i < domComments.length; i++){
-	const username = domComments[i].querySelectorAll('[href*="/user/"]')[0].innerText;
-	const buttonRow = domComments[i].querySelectorAll('[id*="comment-share-menu"]')[0].parentElement;
-	const injectedButton = document.createElement("div");
-	let isSelf = false;
-	for (let i = 0; i < buttonRow.childNodes.length; i++){
-		if (buttonRow.childNodes[i].innerText === "Edit") isSelf = true;
+const updateButtons = function(){
+	const domComments = document.getElementsByClassName("Comment");
+	for (let i = 0; i < domComments.length; i++) {
+		if (domComments[i].getElementsByClassName("snookarma-button").length > 0) {
+			continue;
+		}
+		console.log("Adding button!");
+		const username = domComments[i].querySelectorAll('[href*="/user/"]')[0].innerText;
+		const buttonRow = domComments[i].querySelectorAll('[id*="comment-share-menu"]')[0].parentElement;
+		const injectedButton = document.createElement("div");
+		let isSelf = false;
+		for (let i = 0; i < buttonRow.childNodes.length; i++) {
+			if (buttonRow.childNodes[i].innerText === "Edit") isSelf = true;
+		}
+		injectedButton.innerText = "Tip SnooKarma";
+		injectedButton.classList.add("snookarma-button");
+		injectedButton.setAttribute("snookarma-username", username);
+		if (!isSelf) buttonRow.appendChild(injectedButton);
 	}
-	injectedButton.innerText = "Tip SnooKarma";
-	injectedButton.classList.add("snookarma-button");
-	injectedButton.setAttribute("snookarma-username", username);
-	if(!isSelf) buttonRow.appendChild(injectedButton);
 }
+
+MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+var observer = new MutationObserver(function (mutations, observer) {
+	updateButtons();
+});
+
+observer.observe(document, {
+	subtree: true,
+	attributes: true
+});
+
+updateButtons();
