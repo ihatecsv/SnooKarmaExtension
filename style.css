@@ -1,5 +1,6 @@
 .snookarma-button{
 	cursor: pointer;
+	margin-right: 12px;
 }
 
 .snookarma-button:hover{

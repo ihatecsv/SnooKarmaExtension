@@ -33,16 +33,18 @@ const updateButtons = function(){
 		}
 		console.log("Adding button!");
 		const username = domComments[i].querySelectorAll('[href*="/user/"]')[0].innerText;
-		const buttonRow = domComments[i].querySelectorAll('[id*="comment-share-menu"]')[0].parentElement;
+		const shareMenu = domComments[i].querySelectorAll('[id*="comment-share-menu"]')[0];
 		const injectedButton = document.createElement("div");
 		let isSelf = false;
-		for (let i = 0; i < buttonRow.childNodes.length; i++) {
-			if (buttonRow.childNodes[i].innerText === "Edit") isSelf = true;
+		let goldNode = null;
+		for (let i = 0; i < shareMenu.parentElement.childNodes.length; i++) {
+			if (shareMenu.parentElement.childNodes[i].innerText === "Edit") isSelf = true;
+			if (shareMenu.parentElement.childNodes[i].innerText === "Give gold") goldNode = shareMenu.parentElement.childNodes[i];
 		}
 		injectedButton.innerText = "Tip SnooKarma";
 		injectedButton.classList.add("snookarma-button");
 		injectedButton.setAttribute("snookarma-username", username);
-		if (!isSelf) buttonRow.appendChild(injectedButton);
+		if (!isSelf) goldNode.parentNode.insertBefore(injectedButton, goldNode.nextSibling);
 	}
 }
 
