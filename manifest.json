@@ -1,6 +1,6 @@
   {
   	"name": "SnooKarma Extension",
-  	"version": "1.0.1",
+  	"version": "1.0.2",
   	"description": "Tip others with SnooKarma!",
   	"permissions": ["declarativeContent", "storage", "activeTab"],
   	"background": {
