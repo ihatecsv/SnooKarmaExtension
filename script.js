@@ -4,6 +4,11 @@ window.addEventListener('message', function (ev) {
 	if(typeof ev.data.request === "undefined"){
 		return;
 	}
+
+	if (web3.eth.accounts.length === 0){
+		return alert("Can't make transaction! Please make sure you have MetaMask installed and unlocked!");
+	}
+
 	const recipient = ev.data.request.recipient;
 	const amount = ev.data.request.amount;
 
@@ -15,7 +20,10 @@ window.addEventListener('message', function (ev) {
 		contract.transfer(recipient, amount, {
 			from: result[0]
 		}, function (err, transactionHash) {
-			console.log(err, transactionHash);
+			if(err){
+				return alert(err);
+			}
+			return alert("Sent SnooKarma! - " + transactionHash);
 		});
 	});
 }, true); // useCapture: true
