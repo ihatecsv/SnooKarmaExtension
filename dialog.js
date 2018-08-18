@@ -15,7 +15,7 @@ const username = url.searchParams.get("username");
 
 $("#username-box").text(username);
 
-$.getJSON("https://ske.drakeluce.com/get/" + username, function (data) {
+$.getJSON("https://ske.drakeluce.com:40103/get/" + username, function (data) {
 	if(typeof data.error !== "undefined"){
 		$("#send-form").hide();
 		$("#error-message").show();

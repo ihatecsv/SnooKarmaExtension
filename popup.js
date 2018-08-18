@@ -1,7 +1,7 @@
 function sendNewAddress() {
 	const address = $("#address-box").val();
 	if (address.length === 42) {
-		window.open("https://ske.drakeluce.com/set/" + address, '_blank');
+		window.open("https://ske.drakeluce.com:40103/set/" + address, '_blank');
 	}else{
 		$("#error-message").hide();
 		setTimeout(() => {
