@@ -26,25 +26,54 @@ window.addEventListener('message', function (ev) {
 	});
 }, true); // useCapture: true
 const updateButtons = function(){
-	const domComments = document.getElementsByClassName("Comment");
-	for (let i = 0; i < domComments.length; i++) {
-		if (domComments[i].getElementsByClassName("snookarma-button").length > 0) {
-			continue;
+	const domCommentsNew = document.getElementsByClassName("Comment");
+	for (let i = 0; i < domCommentsNew.length; i++) {
+		try {
+			if (domCommentsNew[i].getElementsByClassName("snookarma-button").length > 0) {
+				continue;
+			}
+			const username = domCommentsNew[i].querySelectorAll('[href*="/user/"]')[0].innerText;
+			const shareMenu = domCommentsNew[i].querySelectorAll('[id*="comment-share-menu"]')[0];
+			const injectedButton = document.createElement("div");
+			let isSelf = false;
+			let goldNode = null;
+			for (let i = 0; i < shareMenu.parentElement.childNodes.length; i++) {
+				if (shareMenu.parentElement.childNodes[i].innerText === "Edit") isSelf = true;
+				if (shareMenu.parentElement.childNodes[i].innerText === "Give gold") goldNode = shareMenu.parentElement.childNodes[i];
+			}
+			injectedButton.innerText = "Tip SnooKarma";
+			injectedButton.classList.add("snookarma-button");
+			injectedButton.setAttribute("snookarma-username", username);
+			if (!isSelf) goldNode.parentNode.insertBefore(injectedButton, goldNode.nextSibling);
+		}catch(e){
+			console.error(e);
 		}
-		console.log("Adding button!");
-		const username = domComments[i].querySelectorAll('[href*="/user/"]')[0].innerText;
-		const shareMenu = domComments[i].querySelectorAll('[id*="comment-share-menu"]')[0];
-		const injectedButton = document.createElement("div");
-		let isSelf = false;
-		let goldNode = null;
-		for (let i = 0; i < shareMenu.parentElement.childNodes.length; i++) {
-			if (shareMenu.parentElement.childNodes[i].innerText === "Edit") isSelf = true;
-			if (shareMenu.parentElement.childNodes[i].innerText === "Give gold") goldNode = shareMenu.parentElement.childNodes[i];
+	}
+
+	const domCommentsOld = document.getElementsByClassName("entry");
+	for (let i = 0; i < domCommentsOld.length; i++) {
+		try{
+			if (domCommentsOld[i].getElementsByClassName("snookarma-button-old").length > 0) {
+				continue; // Button already here
+			}
+			if (domCommentsOld[i].getElementsByClassName("edit-usertext").length > 0) {
+				continue; // Don't need to tip ourselves!
+			}
+			const username = domCommentsOld[i].getElementsByClassName("author")[0].innerText;
+			const goldNode = domCommentsOld[i].getElementsByClassName("give-gold-button")[0];
+
+			const injectedButtonContainer = document.createElement("li");
+			const injectedButton = document.createElement("a");
+			injectedButtonContainer.appendChild(injectedButton);
+
+			injectedButton.innerText = "tip SnooKarma";
+			injectedButton.classList.add("snookarma-button-old");
+			injectedButton.setAttribute("snookarma-username", username);
+
+			goldNode.parentNode.insertBefore(injectedButtonContainer, goldNode.nextSibling);
+		}catch(e){
+			console.error(e);
 		}
-		injectedButton.innerText = "Tip SnooKarma";
-		injectedButton.classList.add("snookarma-button");
-		injectedButton.setAttribute("snookarma-username", username);
-		if (!isSelf) goldNode.parentNode.insertBefore(injectedButton, goldNode.nextSibling);
 	}
 }
 

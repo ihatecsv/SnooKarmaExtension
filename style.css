@@ -6,3 +6,8 @@
 .snookarma-button:hover{
 	text-decoration: underline;
 }
+
+.snookarma-button-old{
+	cursor: pointer;
+	color: #2894a7 !important;
+}

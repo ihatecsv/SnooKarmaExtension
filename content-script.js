@@ -22,3 +22,4 @@ const openDialog = function (event) {
 }
 
 $("body").on("click", ".snookarma-button", openDialog);
+$("body").on("click", ".snookarma-button-old", openDialog);
