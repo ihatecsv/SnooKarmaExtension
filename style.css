@@ -1,0 +1,7 @@
+.snookarma-button{
+	cursor: pointer;
+}
+
+.snookarma-button:hover{
+	text-decoration: underline;
+}

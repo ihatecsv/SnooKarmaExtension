@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Send SnooKarma</title>
+</head>
+
+<body>
+	<div id="send-form">
+		<h1>Sending to
+			<span id="username-box"></span>
+		</h1>
+		<h2><code id="address-box"></code></h2>
+		<form>
+			Amount
+			<input type="number" id="amount-box" value="0" min="0" step="0.01">
+			<input type="submit" id="submit-button" value="Send">
+		</form>
+	</div>
+	<div id="error-message" style="display: none">
+		<h1>This user hasn't set their SnooKarmaExtension address!</h1>
+	</div>
+	<script src="jquery.min.js"></script>
+	<script src="dialog.js"></script>
+</body>
+
+</html>
